@@ -1,6 +1,10 @@
 # Customise
 node_modules
 
+# Loglama
+log
+
+#
 
 # target
 HELP.md

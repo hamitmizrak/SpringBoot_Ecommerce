@@ -1,5 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
+import com.hamitmizrak.springboot_ecommerce.data.embedded.EmbeddableCustomerEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
@@ -22,26 +23,18 @@ import java.util.Date;
 //Customer(1)  ---- Address(1)
 @Entity(name="Customers")
 @Table(name="customer")
-public class CustomerEntity implements Serializable {
+public class CustomerEntity extends BaseEntity implements Serializable {
 
     // Serileştirme
     public static final Long serialVersionUID = 1L;
 
     // Field
 
-    // ID
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id",unique = true,nullable = false,insertable = true,updatable = false)
-    private Long customerId;
-
     // Embedded
+    @Embedded
+    EmbeddableCustomerEntity embeddableCustomerEntity=new EmbeddableCustomerEntity();
 
-    // DATE
-    @CreationTimestamp
-    //@Temporal(TemporalType.DATE) // yıl ay gün
-    //@Temporal(TemporalType.TIME) // saat dakika saniye
-    @Temporal(TemporalType.TIMESTAMP) // yıl ay gün saat dakika saniye
-    private Date createdDate = new Date(System.currentTimeMillis());
-
+    // EMAIL
+    @Column(name = "customer_email", columnDefinition = "varchar(255) default 'example@gmail.com'")
+    private String email;
 } //end class CustomerDto

@@ -34,9 +34,4 @@ public class EmbeddableCustomerEntity {
 
     // GENDER
     private String gender;
-
-    // EMAIL
-    @Column(name = "customer_email", columnDefinition = "varchar(255) default 'example@gmail.com'")
-    private String email;
-
-}
+} //end class EmbeddableCustomerEntity

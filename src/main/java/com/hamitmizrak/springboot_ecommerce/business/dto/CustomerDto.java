@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +25,7 @@ public class CustomerDto implements Serializable {
     // Serileştirme
     public static final Long serialVersionUID = 1L;
 
-    // Field
+    // FIELD
 
     // ID
     private Long customerId;

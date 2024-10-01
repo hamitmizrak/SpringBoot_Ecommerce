@@ -19,7 +19,6 @@ import java.util.Date;
 @Setter
 @ToString
 
-
 // Ortak kolonları buraya ekliyoruz.
 @MappedSuperclass
 @JsonIgnoreProperties(value = {"created_date","last_date"},allowGetters = true) // Frontend gitmeyecek kolonlar

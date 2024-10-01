@@ -14,6 +14,8 @@ import java.util.Date;
 @NoArgsConstructor //parametresiz constructor
 @AllArgsConstructor //parametresiz constructor
 @Builder
+
+//Customer(1)  ---- Address(1)
 public class CustomerDto implements Serializable {
 
     // Serileştirme

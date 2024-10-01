@@ -22,33 +22,33 @@ abstract public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
-    private Long customerId;
+    protected Long customerId;
 
     // AUDITING
     // Kim Ekledi
     @CreatedBy
     @Column(name = "created_user")
-    private String createdUser;
+    protected String createdUser;
 
     // Kim Ne Zaman Ekledi
     @CreatedDate
     @Column(name = "created_date")
-    private Date createdDate;
+    protected Date createdDate;
 
     // Kim Güncelledi
     @LastModifiedBy
     @Column(name = "last_user")
-    private String lastUser;
+    protected String lastUser;
 
     // Kim Ne Zaman Güncelledi
     @LastModifiedDate
     @Column(name = "last_date")
-    private Date lastDate;
+    protected Date lastDate;
 
     // DATE
     @CreationTimestamp
     //@Temporal(TemporalType.DATE) // yıl ay gün
     //@Temporal(TemporalType.TIME) // saat dakika saniye
     @Temporal(TemporalType.TIMESTAMP) // yıl ay gün saat dakika saniye
-    private Date systemDate = new Date(System.currentTimeMillis());
+    protected Date systemDate = new Date(System.currentTimeMillis());
 }

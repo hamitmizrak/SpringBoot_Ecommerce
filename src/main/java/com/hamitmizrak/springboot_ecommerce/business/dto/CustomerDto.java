@@ -1,6 +1,8 @@
 package com.hamitmizrak.springboot_ecommerce.business.dto;
 
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
@@ -47,6 +49,8 @@ public class CustomerDto implements Serializable {
 
     // NOTES
     @NotEmpty(message = "{customer.notes.validation.constraints.NotNull.message}")
+    @Lob
+    @Size(min=10,message = "{customer.notes.least.validation.constraints.NotNull.message}")
     private String customerNotes;
 
     // GENDER

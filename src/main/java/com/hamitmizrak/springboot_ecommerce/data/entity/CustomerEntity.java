@@ -33,4 +33,8 @@ public class CustomerEntity extends BaseEntity implements Serializable {
     @Embedded
     EmbeddableCustomerEntity embeddableCustomerEntity = new EmbeddableCustomerEntity();
 
+    // Parametreli Constructor içinde çağırmamız lazım
+    public CustomerEntity(EmbeddableCustomerEntity embeddableCustomerEntity) {
+        this.embeddableCustomerEntity = embeddableCustomerEntity;
+    }
 } //end class CustomerDto

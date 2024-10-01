@@ -21,20 +21,16 @@ import java.util.Date;
 @Log4j2
 
 //Customer(1)  ---- Address(1)
-@Entity(name="Customers")
-@Table(name="customer")
+@Entity(name = "Customers")
+@Table(name = "customer")
 public class CustomerEntity extends BaseEntity implements Serializable {
 
     // Serileştirme
     public static final Long serialVersionUID = 1L;
 
     // Field
-
     // Embedded
     @Embedded
-    EmbeddableCustomerEntity embeddableCustomerEntity=new EmbeddableCustomerEntity();
+    EmbeddableCustomerEntity embeddableCustomerEntity = new EmbeddableCustomerEntity();
 
-    // EMAIL
-    @Column(name = "customer_email", columnDefinition = "varchar(255) default 'example@gmail.com'")
-    private String email;
 } //end class CustomerDto

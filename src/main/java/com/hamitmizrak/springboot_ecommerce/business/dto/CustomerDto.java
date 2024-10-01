@@ -45,7 +45,7 @@ public class CustomerDto implements Serializable {
 
     // VAT NUMBER
     @NotEmpty(message = "{customer.vatnumber.validation.constraints.NotNull.message}")
-    private String vatNumber;
+    private String customerVatNumber;
 
     // NOTES
     @NotEmpty(message = "{customer.notes.validation.constraints.NotNull.message}")

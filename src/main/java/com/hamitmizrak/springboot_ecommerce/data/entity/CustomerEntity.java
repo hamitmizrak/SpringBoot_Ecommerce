@@ -1,8 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,31 +35,7 @@ public class CustomerEntity implements Serializable {
     @Column(name = "customer_id",unique = true,nullable = false,insertable = true,updatable = false)
     private Long customerId;
 
-    // NAME
-    @Column(name = "customer_name")
-    private String customerName;
-
-    // SURNAME
-    @Column(name = "customer_surname")
-    private String customerSurname;
-
-    // TC NUMBER
-    @Column(name = "customer_tc_number")
-    private String customerTcNumber;
-
-    // VAT NUMBER
-    @Column(name = "customer_vat_number")
-    private String customerVatNumber;
-
-    // NOTES
-    @Column(name = "customer_notes")
-    private String customerNotes;
-
-    // GENDER
-    private String gender;
-
-    // EMAIL
-    private String email;
+    // Embedded
 
     // DATE
     @CreationTimestamp

@@ -4,10 +4,7 @@ import com.hamitmizrak.springboot_ecommerce.data.embedded.EmbeddableCustomerEnti
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.io.Serializable;
-import java.util.Date;
 
 // LOMBOK
 @Data // Getter,Setter,Equals, hashCode

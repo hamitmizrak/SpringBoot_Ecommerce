@@ -2,6 +2,8 @@ package com.hamitmizrak.springboot_ecommerce.business.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor //parametresiz constructor
 @AllArgsConstructor //parametresiz constructor
 @Builder
+@Log4j2
 
 //Customer(1)  ---- Address(1)
 public class CustomerDto implements Serializable {

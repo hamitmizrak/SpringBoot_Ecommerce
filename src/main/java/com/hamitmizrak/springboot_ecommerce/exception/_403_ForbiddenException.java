@@ -3,14 +3,14 @@ package com.hamitmizrak.springboot_ecommerce.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-// Status Code : 201
-// CREATED     : Oluşturuldu
+// Status Code      : 403
+// FORBIDDEN        : Yetkilendirme
 
-@ResponseStatus(value= HttpStatus.CREATED)
-public class _201_CreatedException extends RuntimeException {
+@ResponseStatus(value= HttpStatus.FORBIDDEN)
+public class _403_ForbiddenException extends RuntimeException {
 
     // Constructor Parametreli
-    public _201_CreatedException(String message) {
+    public _403_ForbiddenException(String message) {
         super(message);
     } //end method
 } //end class

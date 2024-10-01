@@ -3,14 +3,14 @@ package com.hamitmizrak.springboot_ecommerce.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-// Status Code : 201
-// CREATED     : Oluşturuldu
+// Status Code      : 402
+// PAYMENT_REQUIRED : Para Ödendi mi?
 
-@ResponseStatus(value= HttpStatus.CREATED)
-public class _201_CreatedException extends RuntimeException {
+@ResponseStatus(value= HttpStatus.PAYMENT_REQUIRED)
+public class _402_PaymentRequiredException extends RuntimeException {
 
     // Constructor Parametreli
-    public _201_CreatedException(String message) {
+    public _402_PaymentRequiredException(String message) {
         super(message);
     } //end method
 } //end class

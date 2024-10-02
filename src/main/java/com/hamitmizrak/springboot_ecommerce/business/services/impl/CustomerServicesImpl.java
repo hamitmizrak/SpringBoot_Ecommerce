@@ -53,13 +53,14 @@ public class CustomerServicesImpl implements ICustomerServices<CustomerDto, Cust
     @Transactional
     @Override
     public CustomerDto customerServiceCreate(CustomerDto customerDto) {
-        if (customerDto == null) {
-            throw new NullPointerException("CustomerDto is null");
+        if(customerDto!=null){
+            CustomerEntity blogEntity=dtoToEntity(customerDto);
+            iCustomerRepository.save(blogEntity);
+            //customerDto.setCustomerId(blogEntity.getCustomerId());
+            //customerDto.setSystemDate(blogEntity.getSystemDate());
+        }else{
+            throw  new NullPointerException("Customer Dto null veri");
         }
-        CustomerEntity customerEntity = dtoToEntity(customerDto);
-        iCustomerRepository.save(customerEntity);
-        // customerDto.setCustomerId(customerEntity.getCustomerId());
-        // customerDto.setCreatedDate(customerEntity.getCreatedDate());
         return customerDto;
     }
 

@@ -6,6 +6,7 @@ import com.hamitmizrak.springboot_ecommerce.business.services.IAddressServices;
 import com.hamitmizrak.springboot_ecommerce.data.entity.AddressEntity;
 import com.hamitmizrak.springboot_ecommerce.data.repository.IAddressRepository;
 import com.hamitmizrak.springboot_ecommerce.exception.HamitMizrakException;
+import com.hamitmizrak.springboot_ecommerce.exception._404_NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -79,9 +80,14 @@ public class AddressServicesImpl implements IAddressServices<AddressDto, Address
         */
 
         // FIND 2.YOL
-        AddressEntity addressEntity = iAddressRepository.findById(id).orElseThrow(() -> {
-            throw new HamitMizrakException(id + "address yoktur");
-        });
+        // 2.YOL (FIND)
+        AddressEntity addressEntity = null;
+        if (id != null) {
+            addressEntity = iAddressRepository.findById(id)
+                    .orElseThrow(() -> new _404_NotFoundException(id + " nolu id yoktur"));
+        } else if (id == null) {
+            throw new HamitMizrakException("İd null olarak geldi");
+        }
         return entityToDto(addressEntity);
     }
 
@@ -99,7 +105,7 @@ public class AddressServicesImpl implements IAddressServices<AddressDto, Address
             addressEntity.setPostalCode(addressDto.getPostalCode());
             iAddressRepository.save(addressEntity);
         }
-        return addressUpdateFindById;
+        return addressDto;
     }
 
     // DELETE

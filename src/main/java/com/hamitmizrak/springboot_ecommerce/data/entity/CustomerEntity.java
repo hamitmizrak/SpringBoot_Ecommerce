@@ -24,7 +24,7 @@ Order  >------<  Product
 @Data // @Getter @Setter @ToString @EqualsAndHashCode
 @Builder
 @Log4j2
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 
 // ENTITY
@@ -44,15 +44,26 @@ public class CustomerEntity implements Serializable {
     @Column(name = "customer_id", unique = true, nullable = false, insertable = true, updatable = false)
     protected Long customerId;
 
+    // DATE
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP) // yıl ay gün saat dakika saniye
+    private Date systemDate;
+
     // RELATION
+    // Address ID
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id",referencedColumnName = "")
+    private AddressEntity addressEntity;
 
     // Field
     // Embedded
     @Embedded
     private EmbeddableCustomerEntity embeddableCustomerEntity = new EmbeddableCustomerEntity();
 
-    // DATE
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP) // yıl ay gün saat dakika saniye
-    private Date systemDate;
+    public CustomerEntity() {
+    }
+
+    public CustomerEntity(EmbeddableCustomerEntity embeddableCustomerEntity) {
+        this.embeddableCustomerEntity = embeddableCustomerEntity;
+    }
 } //end class CustomerDto

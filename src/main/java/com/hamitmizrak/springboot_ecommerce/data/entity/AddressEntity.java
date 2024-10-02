@@ -35,7 +35,7 @@ Order  >------<  Product
 @Entity(name = "Address")  // Sql JOIN için yazdım
 @Table(name = "adress")
 
-// Addres(1) -  CustomerEntity(1)
+//  Addres(1) - CustomerEntity(1)
 public class AddressEntity implements Serializable {
 
     // Serileştirme
@@ -48,6 +48,8 @@ public class AddressEntity implements Serializable {
     protected Long addressId;
 
     // RELATION
+    @OneToOne(mappedBy = "addressEntity")
+    private CustomerEntity customerEntity;
 
     // STREET
     @Column(name = "street")

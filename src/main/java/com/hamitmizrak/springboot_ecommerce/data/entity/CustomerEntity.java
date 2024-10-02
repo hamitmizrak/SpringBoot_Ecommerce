@@ -52,7 +52,7 @@ public class CustomerEntity implements Serializable {
     // RELATION
     // Address ID
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="address_id",referencedColumnName = "")
+    @JoinColumn(name="address_id",referencedColumnName = "customer_id")
     private AddressEntity addressEntity;
 
     // Field

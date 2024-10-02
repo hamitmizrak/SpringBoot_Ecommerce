@@ -20,6 +20,7 @@ import java.util.Date;
 @Log4j2
 
 //Customer(1)  ---- Address(1)
+//Customer(1)  ---- Order(N)
 public class CustomerDto implements Serializable {
 
     // Serileştirme

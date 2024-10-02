@@ -1,8 +1,9 @@
 package com.hamitmizrak.springboot_ecommerce.runners;
 
+import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
+import com.hamitmizrak.springboot_ecommerce.business.dto.CustomerDto;
 import com.hamitmizrak.springboot_ecommerce.business.services.IAddressServices;
 import com.hamitmizrak.springboot_ecommerce.business.services.ICustomerServices;
-import com.hamitmizrak.springboot_ecommerce.business.services.IOrderServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
@@ -31,12 +32,37 @@ import org.springframework.context.annotation.Configuration;
 public class ECommerceCommandLineRunners {
 
     // Injection
-    private final IAddressServices addressService;
-    private final ICustomerServices iCustomerServices;
-    private final IOrderServices iOrderServices;
+    //private final IAddressServices iAddressService;
+    //private final ICustomerServices iCustomerServices;
+    //private final IOrderServices iOrderServices;
+
+    private String[] cityMethod() {
+        String[] city = new String[5];
+        city[0] = "Malatya";
+        city[1] = "Zonguldak";
+        city[2] = "İstanbul";
+        city[3] = "Ankara";
+        city[4] = "Sivas";
+        return city;
+    }
 
     // Data set
-    private void getAddress(){
+    private void saveAddress() {
+        for (int i = 0; i < 5; i++) {
+            /*
+            AddressDto addressDto = AddressDto.builder()
+                    .city(cityMethod()[i])
+                    .country("Türkiye")
+                    .street("cadde" + i)
+                    .postalCode("12345" + i)
+                    .build();
+            */
+            //iAddressService.addressServiceCreate(addressDto);
+        }
+    }
+
+    private void saveAddressCustomer() {
+
 
     }
 
@@ -46,6 +72,12 @@ public class ECommerceCommandLineRunners {
         return args -> {
             log.info("Command Line Runner Çalıştı");
             System.out.println("Command Line Runner Çalıştı");
+
+            // ADDRESS
+            //saveAddress();
+
+            // CUSTOMER
+            //saveAddressCustomer();
         };
     }
 

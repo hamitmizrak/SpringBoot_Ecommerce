@@ -1,4 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.business.services;
+import com.hamitmizrak.springboot_ecommerce.business.dto.CustomerDto;
+
 import java.util.List;
 
 
@@ -26,4 +28,6 @@ public interface ICustomerServices <D,E> {
 
     // DELETE
     public D  customerServiceDeleteFindById(Long id);
+
+
 }

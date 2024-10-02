@@ -41,6 +41,8 @@ public class OrderEntity implements Serializable {
     public static final Long serialVersionUID = 1L;
 
     // RELATION
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name="customer_id",nullable = false)
     private CustomerEntity customerEntity;
 
     // ID

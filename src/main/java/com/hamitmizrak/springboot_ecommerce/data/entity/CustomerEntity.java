@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /*
 Customer  ------  Address
@@ -52,12 +53,12 @@ public class CustomerEntity implements Serializable {
 
     // RELATION
     // Address ID Bilgisini Customer içinde saklıyorum.
-    @OneToOne(targetEntity =AddressEntity.class,fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false,name="address_id")
+    @OneToOne(targetEntity = AddressEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "address_id")
     private AddressEntity addressEntity;
 
-
-    private OrderEntity orderEntity;
+    @OneToMany(mappedBy = "customerEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<OrderEntity>  orderEntity;
 
     // Field
     // Embedded

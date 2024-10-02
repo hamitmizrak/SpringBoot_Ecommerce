@@ -34,10 +34,10 @@ public class EmbeddableCustomerEntity {
     private String customerNotes;
 
     // GENDER
-    private String gender;
+    private String customerGender;
 
     // EMAIL
     @Column(name = "customer_email", columnDefinition = "varchar(255) default 'example@gmail.com'")
-    private String email;
+    private String customerEmail;
 
 } //end class EmbeddableCustomerEntity

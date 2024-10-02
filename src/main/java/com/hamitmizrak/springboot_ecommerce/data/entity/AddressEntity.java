@@ -2,7 +2,11 @@ package com.hamitmizrak.springboot_ecommerce.data.entity;
 
 import com.hamitmizrak.springboot_ecommerce.data.embedded.EmbeddableCustomerEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,12 +32,11 @@ Order  >------<  Product
 @AllArgsConstructor
 
 // ENTITY
-@Entity(name = "Customers")  // Sql JOIN için yazdım
-@Table(name = "customer")
+@Entity(name = "Address")  // Sql JOIN için yazdım
+@Table(name = "adress")
 
-// CustomerEntity(1) - Addres(1)
-// CustomerEntity(1) - Order(N)
-public class CustomerEntity implements Serializable {
+// Addres(1) -  CustomerEntity(1)
+public class AddressEntity implements Serializable {
 
     // Serileştirme
     public static final Long serialVersionUID = 1L;
@@ -41,15 +44,24 @@ public class CustomerEntity implements Serializable {
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id", unique = true, nullable = false, insertable = true, updatable = false)
-    protected Long customerId;
+    @Column(name = "address_id", unique = true, nullable = false, insertable = true, updatable = false)
+    protected Long addressId;
 
     // RELATION
 
-    // Field
-    // Embedded
-    @Embedded
-    private EmbeddableCustomerEntity embeddableCustomerEntity = new EmbeddableCustomerEntity();
+    // STREET
+    @Column(name = "street")
+    private String street;
+
+    // CITY
+    private String city;
+
+    // COUNTRY
+    private String country;
+
+    // POSTA CODE
+    @Column(name = "postal_code")
+    private String postalCode;
 
     // DATE
     @CreationTimestamp

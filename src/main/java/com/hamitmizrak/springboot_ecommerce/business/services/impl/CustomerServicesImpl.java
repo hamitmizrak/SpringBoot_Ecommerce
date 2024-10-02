@@ -130,8 +130,8 @@ public class CustomerServicesImpl implements ICustomerServices<CustomerDto, Cust
             customerEntity.getEmbeddableCustomerEntity().setCustomerName(customerDto.getCustomerName());
             customerEntity.getEmbeddableCustomerEntity().setCustomerSurname(customerDto.getCustomerSurname());
             customerEntity.getEmbeddableCustomerEntity().setCustomerNotes(customerDto.getCustomerNotes());
-            customerEntity.getEmbeddableCustomerEntity().setEmail(customerDto.getEmail());
-            customerEntity.getEmbeddableCustomerEntity().setGender(customerDto.getGender());
+            customerEntity.getEmbeddableCustomerEntity().setCustomerEmail(customerDto.getCustomerEmail());
+            customerEntity.getEmbeddableCustomerEntity().setCustomerGender(customerDto.getCustomerGender());
             customerEntity.getEmbeddableCustomerEntity().setCustomerTcNumber(customerDto.getCustomerTcNumber());
             customerEntity.getEmbeddableCustomerEntity().setCustomerVatNumber(customerDto.getCustomerVatNumber());
             iCustomerRepository.save(customerEntity);

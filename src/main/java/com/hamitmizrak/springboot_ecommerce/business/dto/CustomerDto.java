@@ -15,7 +15,7 @@ import java.util.Date;
 //@ToString
 //@EqualsAndHashCode
 @NoArgsConstructor //parametresiz constructor
-@AllArgsConstructor //parametresiz constructor
+@AllArgsConstructor //parametreli constructor
 @Builder
 @Log4j2
 
@@ -54,15 +54,15 @@ public class CustomerDto implements Serializable {
 
     // GENDER
     @NotEmpty(message = "{customer.gender.validation.constraints.NotNull.message}")
-    private String gender;
+    private String customerGender;
 
     // EMAIL
     @NotEmpty(message = "{customer.email.validation.constraints.NotNull.message}")
-    private String email;
+    private String customerEmail;
 
     // DATE
     @Builder.Default
-    private Date createdDate=new Date(System.currentTimeMillis());
+    private Date systemDate=new Date(System.currentTimeMillis());
 
     /* PSVM
     public static void main(String[] args) {

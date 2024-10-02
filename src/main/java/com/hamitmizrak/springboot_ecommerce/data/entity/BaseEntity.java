@@ -31,7 +31,7 @@ abstract public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
-    protected Long customerId;
+    protected Long id;
 
     // AUDITING
     // Kim Ekledi

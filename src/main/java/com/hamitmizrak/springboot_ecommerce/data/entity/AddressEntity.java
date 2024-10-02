@@ -48,8 +48,7 @@ public class AddressEntity implements Serializable {
     protected Long addressId;
 
     // RELATION
-    @OneToOne(mappedBy = "addressEntity")
-    private CustomerEntity customerEntity;
+
 
     // STREET
     @Column(name = "street")

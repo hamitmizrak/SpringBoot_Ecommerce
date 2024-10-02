@@ -50,9 +50,9 @@ public class CustomerEntity implements Serializable {
     private Date systemDate;
 
     // RELATION
-    // Address ID
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="address_id",referencedColumnName = "customer_id")
+    // Address ID Bilgisini Customer içinde saklıyorum.
+    @OneToOne( targetEntity =AddressEntity.class,fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false,name="address_id")
     private AddressEntity addressEntity;
 
     // Field
@@ -63,7 +63,8 @@ public class CustomerEntity implements Serializable {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(EmbeddableCustomerEntity embeddableCustomerEntity) {
+    public CustomerEntity(EmbeddableCustomerEntity embeddableCustomerEntity, AddressEntity addressEntity) {
         this.embeddableCustomerEntity = embeddableCustomerEntity;
+        this.addressEntity = addressEntity;
     }
 } //end class CustomerDto

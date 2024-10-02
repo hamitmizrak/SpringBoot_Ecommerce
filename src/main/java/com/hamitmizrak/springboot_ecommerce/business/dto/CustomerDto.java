@@ -10,10 +10,7 @@ import java.util.List;
 public class CustomerDto {
 
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String tcNumber;
+    private PersonalInfoDto personalInfo; // Embedded
 
     private AddressDto address;
     private List<OrderDto> orders = new ArrayList<>();

@@ -29,10 +29,8 @@ public class CustomerEntity {
     private Long id;
 
     // Gömülü personal info
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String tcNumber;
+    @Embedded
+    private PersonalInfo personalInfo;
 
     // Address ile One-to-One ilişki
     @OneToOne(cascade = CascadeType.ALL)

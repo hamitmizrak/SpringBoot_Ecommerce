@@ -13,47 +13,45 @@ import java.util.List;
 @RequestMapping("/api/customers")
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
-    // POST - Create a new customer
+    // POST: Yeni bir müşteri oluşturma
     @PostMapping
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
-        CustomerDto savedCustomer = customerService.createCustomer(customerDto);
-        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
+        CustomerDto createdCustomer = customerService.createCustomer(customerDto);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
-    // GET - Find a customer by ID
+    // GET: Belirli bir müşteri bulma (id ile)
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Long id) {
         CustomerDto customerDto = customerService.getCustomerById(id);
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
     }
 
-    // PUT - Update an existing customer
+    // GET: Tüm müşterileri listeleme
+    @GetMapping
+    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+        List<CustomerDto> customerList = customerService.getAllCustomers();
+        return new ResponseEntity<>(customerList, HttpStatus.OK);
+    }
+
+    // PUT: Var olan bir müşteriyi güncelleme
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
         CustomerDto updatedCustomer = customerService.updateCustomer(id, customerDto);
         return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
-    // DELETE - Delete a customer by ID
+    // DELETE: Belirli bir müşteriyi silme
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    // GET - List all customers
-    @GetMapping
-    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
-        List<CustomerDto> customers = customerService.getAllCustomers();
-        return new ResponseEntity<>(customers, HttpStatus.OK);
-    }
 }
-

@@ -30,7 +30,7 @@ public class CustomerApiImpl implements ICustomerApi<CustomerDto> {
     @Override
     @PostMapping("/create")
     public ResponseEntity<?> customerApiCreate(@Valid @RequestBody CustomerDto customerDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(iCustomerServices.customerServiceCreate(customerDto));
+        return new ResponseEntity<>(iCustomerServices.customerServiceCreate(customerDto),HttpStatus.OK);
     }
 
     // LIST
@@ -38,7 +38,7 @@ public class CustomerApiImpl implements ICustomerApi<CustomerDto> {
     @Override
     @GetMapping("/list")
     public ResponseEntity<List<CustomerDto>> customerApiList() {
-        return ResponseEntity.ok(iCustomerServices.customerServiceList());
+        return ResponseEntity.status(HttpStatus.OK).body(iCustomerServices.customerServiceList());
     }
 
     // FIND BY ID
@@ -46,7 +46,7 @@ public class CustomerApiImpl implements ICustomerApi<CustomerDto> {
     @Override
     @GetMapping("/find/{id}")
     public ResponseEntity<?> customerApiFindById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(iCustomerServices.customerServiceFindById(id));
+        return ResponseEntity.status(200).body(iCustomerServices.customerServiceFindById(id));
     }
 
     // UPDATE BY ID

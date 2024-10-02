@@ -17,7 +17,16 @@ import java.io.Serializable;
 @Builder
 @Log4j2
 
-//Customer(1)  ---- Address(1)
+/*
+Customer  ------  Address
+   1    @OneToOne    1
+
+Customer  ------<    Order
+   1     @ManyToOne    *
+
+Order  >------<  Product
+   *  @ManyToMany    *
+ */
 @Entity(name = "Customers")
 @Table(name = "customer")
 public class CustomerEntity extends BaseEntity implements Serializable {

@@ -21,7 +21,7 @@ public interface IAddressRepository extends CrudRepository<AddressEntity,Long> {
     // Delivered Query
 
     // Posta koduna göre Veri gösterin.
-    AddressEntity findByPostalCode(String postalCode);
+    //AddressEntity findByPostalCode(String postalCode);
 
 
     // @Query

@@ -27,10 +27,10 @@ public interface ICustomerRepository extends CrudRepository<CustomerEntity,Long>
     // Delivered Query
 
     // isimler müşterileri bulmak
-    List<CustomerEntity> findByCustomerName(String customerName);
+    //List<CustomerEntity> findByCustomerName(String customerName);
 
     // Email ile Müşteri bulmak
-    CustomerEntity findByCustomerEmail(String customerEmail);
+    //CustomerEntity findByCustomerEmail(String customerEmail);
 
     // Tc kimlik numarasına göre müşteri bulmak
 

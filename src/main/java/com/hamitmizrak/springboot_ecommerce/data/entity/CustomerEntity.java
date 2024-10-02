@@ -44,7 +44,7 @@ public class CustomerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", unique = true, nullable = false, insertable = true, updatable = false)
-    protected Long customerId;
+    private Long customerId;
 
     // DATE
     @CreationTimestamp

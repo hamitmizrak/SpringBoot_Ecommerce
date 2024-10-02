@@ -1,5 +1,9 @@
 package com.hamitmizrak.springboot_ecommerce.runners;
 
+import com.hamitmizrak.springboot_ecommerce.business.services.IAddressServices;
+import com.hamitmizrak.springboot_ecommerce.business.services.ICustomerServices;
+import com.hamitmizrak.springboot_ecommerce.business.services.IOrderServices;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +25,20 @@ import org.springframework.context.annotation.Configuration;
 
 // LOMBOK
 @Log4j2
+@RequiredArgsConstructor
 
 @Configuration
 public class ECommerceCommandLineRunners {
+
+    // Injection
+    private final IAddressServices addressService;
+    private final ICustomerServices iCustomerServices;
+    private final IOrderServices iOrderServices;
+
+    // Data set
+    private void getAddress(){
+
+    }
 
 
     @Bean

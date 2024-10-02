@@ -40,18 +40,16 @@ public class OrderEntity implements Serializable {
     // Serileştirme
     public static final Long serialVersionUID = 1L;
 
-    // RELATION
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name="customer_id",nullable = false)
-    private CustomerEntity customerEntity;
-
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", unique = true, nullable = false, insertable = true, updatable = false)
-    protected Long orderId;
+    private Long orderId;
 
     // RELATION
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name="customer_id",nullable = false)
+    private CustomerEntity customerEntity;
 
     // ORDER NAME
     @Column(name = "order_name")
@@ -61,10 +59,11 @@ public class OrderEntity implements Serializable {
     @Column(name = "order_price")
     private String orderPrice;
 
-
     // ORDER CODE
     @Column(name = "order_code")
     private String orderCode;
+
+    // RELATION
 
     // DATE
     @CreationTimestamp

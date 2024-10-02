@@ -45,10 +45,7 @@ public class AddressEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", unique = true, nullable = false, insertable = true, updatable = false)
-    protected Long addressId;
-
-    // RELATION
-
+    private Long addressId;
 
     // STREET
     @Column(name = "street")
@@ -63,6 +60,8 @@ public class AddressEntity implements Serializable {
     // POSTA CODE
     @Column(name = "postal_code")
     private String postalCode;
+
+    // RELATION
 
     // DATE
     @CreationTimestamp

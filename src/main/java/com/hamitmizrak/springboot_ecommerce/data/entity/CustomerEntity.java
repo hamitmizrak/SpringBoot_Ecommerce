@@ -51,7 +51,7 @@ public class CustomerEntity implements Serializable {
 
     // RELATION
     // Address ID Bilgisini Customer içinde saklıyorum.
-    @OneToOne( targetEntity =AddressEntity.class,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity =AddressEntity.class,fetch = FetchType.EAGER)
     @JoinColumn(nullable = false,name="address_id")
     private AddressEntity addressEntity;
 

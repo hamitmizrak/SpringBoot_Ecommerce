@@ -13,23 +13,23 @@ curl_data(){
    -d '{
    "id": 0,
    "personalInfo": {
-     "firstName": "string",
-     "lastName": "string",
-     "email": "string",
-     "tcNumber": "string"
+     "firstName": "hamit",
+     "lastName": "mızrak",
+     "email": "hamitmizrak@gmail.com",
+     "tcNumber": "123456789"
    },
    "address": {
      "id": 0,
      "street": "string",
-     "city": "string",
+     "city": "malatya",
      "state": "string",
-     "postalCode": "string"
+     "postalCode": "44"
    },
    "orders": [
      {
        "id": 0,
-       "orderNumber": "string",
-       "totalAmount": 0
+       "orderNumber": "1",
+       "totalAmount": 20
      }
    ]
  }'

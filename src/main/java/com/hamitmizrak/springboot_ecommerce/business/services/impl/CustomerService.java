@@ -1,5 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.business.services.impl;
 
+import com.hamitmizrak.springboot_ecommerce.bean.PasswordEncoderBean;
 import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
 import com.hamitmizrak.springboot_ecommerce.business.dto.CustomerDto;
 import com.hamitmizrak.springboot_ecommerce.business.dto.OrderDto;
@@ -10,23 +11,26 @@ import com.hamitmizrak.springboot_ecommerce.data.entity.CustomerEntity;
 import com.hamitmizrak.springboot_ecommerce.data.entity.OrderEntity;
 import com.hamitmizrak.springboot_ecommerce.data.repository.CustomerRepository;
 import com.hamitmizrak.springboot_ecommerce.exception._404_NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+// LOMBOK
+@RequiredArgsConstructor
+
 @Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    // Password Encoder Bean
+    private final PasswordEncoderBean passwordEncoderBean;
 
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
+   // Email Masking
     public CustomerDto createCustomer(CustomerDto customerDto) {
+        customerDto.getPersonalInfo().setEmail(passwordEncoderBean.getPasswordEncoderBeanMethod().encode(customerDto.getPersonalInfo().getEmail()));
         CustomerEntity customerEntity = convertToEntity(customerDto);
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
         return convertToDto(savedCustomer);

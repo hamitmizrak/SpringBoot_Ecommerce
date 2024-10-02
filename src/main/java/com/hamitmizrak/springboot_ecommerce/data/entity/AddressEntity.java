@@ -19,11 +19,13 @@ Order  >------<  Product
 */
 @Entity
 @Table(name = "addresses")
-public class AddressEntity {
+public class AddressEntity extends BaseEntity {
 
+    /*
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    */
 
     private String street;
     private String city;

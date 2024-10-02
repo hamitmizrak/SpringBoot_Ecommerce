@@ -1,5 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
+import com.hamitmizrak.springboot_ecommerce.business.dto.OrderDto;
 import com.hamitmizrak.springboot_ecommerce.data.embedded.EmbeddableCustomerEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -54,6 +55,9 @@ public class CustomerEntity implements Serializable {
     @OneToOne(targetEntity =AddressEntity.class,fetch = FetchType.EAGER)
     @JoinColumn(nullable = false,name="address_id")
     private AddressEntity addressEntity;
+
+
+    private OrderEntity orderEntity;
 
     // Field
     // Embedded

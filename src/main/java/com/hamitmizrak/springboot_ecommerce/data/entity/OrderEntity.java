@@ -40,6 +40,9 @@ public class OrderEntity implements Serializable {
     // Serileştirme
     public static final Long serialVersionUID = 1L;
 
+    // RELATION
+    private CustomerEntity customerEntity;
+
     // ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

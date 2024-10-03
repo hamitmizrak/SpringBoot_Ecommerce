@@ -64,10 +64,62 @@ public class ECommerceCommandLineRunners {
             */
             //iAddressService.addressServiceCreate(addressDto);
         }
+
+
+
+
     }
 
     private void saveAddressCustomer() {
+        String firstName="hamit",lastName="mizrak";
+        CustomerEntity customer = customerRepository.findByPersonalInfo_FirstNameAndPersonalInfoLastName(firstName,lastName);
 
+        if (customer != null) {
+            System.out.println("Var: " + customer.  getPersonalInfo().getFirstName() + " " + customer.getPersonalInfo().getLastName());
+        } else {
+            System.out.println("Yok with firstName: " + firstName + " and lastName: " + lastName);
+        }
+
+        // TC NUMBER
+        CustomerEntity customer2 = customerRepository.findByPersonalInfoTcNumber("123456789");
+        System.out.println(customer2.getPersonalInfo().getTcNumber());
+
+        // CITY
+        String city="malatya",  postalCode="44";
+        List<CustomerEntity> customers3 = customerRepository.findByAddressCityAndAddressPostalCode(city, postalCode);
+
+        if (!customers3.isEmpty()) {
+            customers3.forEach(temp -> {
+                System.out.println("Şehirrr: " + temp.getPersonalInfo().getFirstName() + " lives in " + city + " with postal code " + postalCode);
+            });
+        } else {
+            System.out.println("No customers3 found in city44: " + city + " with postal code: " + postalCode);
+        }
+
+
+        /////////
+        String tcNumber="123456789";
+        CustomerEntity customer4 = customerRepository.findByPersonalInfoTcNumber(tcNumber);
+
+        if (customer4 != null) {
+            System.out.println("tcc Customer Found with T.C. Number: " + tcNumber);
+        } else {
+            System.out.println("No customer4 found with T.C. Number: " + tcNumber);
+        }
+
+        ///////////
+        // Şehir adına göre müşterileri bul ve konsola yazdır
+        String city44="malatya";
+        List<CustomerEntity> customers = customerRepository.findByAddressCity(city44);
+
+        if (!customers.isEmpty()) {
+            System.out.println("yes Customers in city44: " + city44);
+            customers.forEach(customer44 -> {
+                System.out.println("Customer: " + customer44.getPersonalInfo().getFirstName() + " " + customer44.getPersonalInfo().getLastName());
+            });
+        } else {
+            System.out.println("No customers found in city44: " + city44);
+        }
 
     }
 
@@ -84,55 +136,7 @@ public class ECommerceCommandLineRunners {
             // CUSTOMER
             //saveAddressCustomer();
 
-            String firstName="hamit",lastName="mizrak";
-            CustomerEntity customer = customerRepository.findByPersonalInfo_FirstNameAndPersonalInfoLastName(firstName,lastName);
 
-            if (customer != null) {
-                System.out.println("Var: " + customer.  getPersonalInfo().getFirstName() + " " + customer.getPersonalInfo().getLastName());
-            } else {
-                System.out.println("Yok with firstName: " + firstName + " and lastName: " + lastName);
-            }
-
-            // TC NUMBER
-            CustomerEntity customer2 = customerRepository.findByPersonalInfoTcNumber("123456789");
-            System.out.println(customer2.getPersonalInfo().getTcNumber());
-
-            // CITY
-            String city="malatya",  postalCode="44";
-            List<CustomerEntity> customers3 = customerRepository.findByAddressCityAndAddressPostalCode(city, postalCode);
-
-            if (!customers3.isEmpty()) {
-                customers3.forEach(temp -> {
-                    System.out.println("Şehirrr: " + temp.getPersonalInfo().getFirstName() + " lives in " + city + " with postal code " + postalCode);
-                });
-            } else {
-                System.out.println("No customers3 found in city44: " + city + " with postal code: " + postalCode);
-            }
-
-
-            /////////
-            String tcNumber="123456789";
-                CustomerEntity customer4 = customerRepository.findByPersonalInfoTcNumber(tcNumber);
-
-                if (customer4 != null) {
-                    System.out.println("tcc Customer Found with T.C. Number: " + tcNumber);
-                } else {
-                    System.out.println("No customer4 found with T.C. Number: " + tcNumber);
-                }
-
-                ///////////
-            // Şehir adına göre müşterileri bul ve konsola yazdır
-            String city44="malatya";
-                List<CustomerEntity> customers = customerRepository.findByAddressCity(city44);
-
-                if (!customers.isEmpty()) {
-                    System.out.println("yes Customers in city44: " + city44);
-                    customers.forEach(customer44 -> {
-                        System.out.println("Customer: " + customer44.getPersonalInfo().getFirstName() + " " + customer44.getPersonalInfo().getLastName());
-                    });
-                } else {
-                    System.out.println("No customers found in city44: " + city44);
-                }
 
         };
     }

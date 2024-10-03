@@ -21,11 +21,10 @@ Order  >------<  Product
 */
 
 // LOMBOK
-@Data // @Getter @Setter @ToString @EqualsAndHashCode
-@Builder
-@Log4j2
-@NoArgsConstructor
-@AllArgsConstructor
+// LOMBOK
+@Getter
+@Setter
+
 
 // ENTITY
 @Entity(name = "Address")  // Sql JOIN için yazdım

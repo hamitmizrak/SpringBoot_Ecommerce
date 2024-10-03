@@ -39,6 +39,9 @@ public class CustomerService {
     public CustomerDto getCustomerById(Long id) {
         CustomerEntity customerEntity = customerRepository.findById(id)
                 .orElseThrow(() -> new _404_NotFoundException("Customer not found with id: " + id));
+        //
+        //OrderEntity orderEntity= new OrderEntity();
+        //orderEntity.setCustomerEntity(customerEntity);
         return convertToDto(customerEntity);
     }
 

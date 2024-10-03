@@ -25,12 +25,9 @@ Order  >------<  Product
 */
 
 // LOMBOK
-// LOMBOK
-@Data // @Getter @Setter @ToString @EqualsAndHashCode
-@Builder
-@Log4j2
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+
 
 // ENTITY
 @Entity(name = "Customers")  // Sql JOIN için yazdım

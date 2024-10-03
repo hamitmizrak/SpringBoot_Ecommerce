@@ -4,9 +4,11 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
+// LOMBOK
 @Getter
 @Setter
 
+// @Embeddable
 @Embeddable
 public class PersonalInfo {
 
@@ -14,6 +16,4 @@ public class PersonalInfo {
     private String lastName;
     private String email;
     private String tcNumber;
-
-    // Getters and Setters
 }

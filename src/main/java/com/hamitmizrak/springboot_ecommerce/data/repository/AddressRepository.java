@@ -8,7 +8,6 @@ package com.hamitmizrak.springboot_ecommerce.data.repository;
 //public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
 //}
 
-
 import com.hamitmizrak.springboot_ecommerce.data.entity.AddressEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,11 +19,18 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/*
+@Repository
+public interface AddressRepository  CrudRepository<AddresEntity, Long>
+public interface AddressRepository  JpaRepository<OrderEntity, Long>
+ */
 @Repository
 public class AddressRepository {
 
+    // Injection
     private final JdbcTemplate jdbcTemplate;
 
+    // Parametreli Constructor
     @Autowired
     public AddressRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

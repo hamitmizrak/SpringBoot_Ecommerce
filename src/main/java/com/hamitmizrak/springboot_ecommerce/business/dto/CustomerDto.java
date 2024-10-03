@@ -10,10 +10,14 @@ import java.util.List;
 public class CustomerDto {
 
     private Long id;
-    private PersonalInfoDto personalInfo; // Embedded
 
+    // Embedded
+    private PersonalInfoDto personalInfo;
+
+    // Relation
+    // Customer(1) - Address(1)
     private AddressDto address;
-    private List<OrderDto> orders = new ArrayList<>();
 
-    // Getters and Setters
+    // Customer(1)- Order(N)
+    private List<OrderDto> orders = new ArrayList<>();
 }

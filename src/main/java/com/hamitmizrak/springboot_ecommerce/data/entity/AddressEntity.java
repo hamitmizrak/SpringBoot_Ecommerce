@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
-
 /*
 Customer  ------  Address
    1    @OneToOne    1
@@ -17,20 +14,18 @@ Customer  ------<    Order
 Order  >------<  Product
    *  @ManyToMany    *
 */
+
+// LOMBOK
+@Setter
+@Getter
+
+// ENTITY
 @Entity
 @Table(name = "addresses")
 public class AddressEntity extends BaseEntity {
-
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    */
 
     private String street;
     private String city;
     private String state;
     private String postalCode;
-
-    // Getters and Setters
 }

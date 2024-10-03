@@ -6,6 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PersonalInfoDto {
+
+    // Embedded
     private String firstName;
     private String lastName;
     private String email;

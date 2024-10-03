@@ -8,8 +8,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
-@Getter
+
 /*
 Customer  ------  Address
    1    @OneToOne    1
@@ -20,8 +19,16 @@ Customer  ------<    Order
 Order  >------<  Product
    *  @ManyToMany    *
 */
+
+// LOMBOK
+@Setter
+@Getter
+
+// ENTITY
 @Entity
 @Table(name = "customers")
+
+// Customer(1) - Order(N)
 public class CustomerEntity {
 
     @Id
@@ -40,6 +47,4 @@ public class CustomerEntity {
     // Order ile One-to-Many ilişki
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderEntity> orders = new ArrayList<>();
-
-    // Getters and Setters
 }

@@ -14,8 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class AddressService {
 
+    // Field
     private final AddressRepository addressRepository;
 
+    // Parametreli Cosntructor
     @Autowired
     public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
@@ -62,7 +64,6 @@ public class AddressService {
         if (rowsAffected == 0) {
             throw new RuntimeException("Failed to update the address.");
         }
-
         return convertToDto(existingAddress);
     }
 

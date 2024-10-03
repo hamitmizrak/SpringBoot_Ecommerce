@@ -20,8 +20,6 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-
-
     // POST - Create a new address
     @PostMapping
     public ResponseEntity<AddressDto> createAddress(@RequestBody AddressDto addressDto) {
@@ -57,7 +55,7 @@ public class AddressController {
         addressService.deleteAddress(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-*/
+   */
 
     // DELETE - Delete an address by ID
     @DeleteMapping
@@ -67,8 +65,7 @@ public class AddressController {
     }
 
     /*
-
-    Aşağıda `@PathVariable` yerine `@RequestParam` kullanarak aynı silme işlemini nasıl yapabileceğinizi ve bu iki anotasyon arasındaki farkları.
+Aşağıda `@PathVariable` yerine `@RequestParam` kullanarak aynı silme işlemini nasıl yapabileceğinizi ve bu iki anotasyon arasındaki farkları.
 
 ### 1. **@RequestParam Kullanarak DELETE İşlemi**
 

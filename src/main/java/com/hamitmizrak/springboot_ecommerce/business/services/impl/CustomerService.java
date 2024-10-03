@@ -25,11 +25,15 @@ import java.util.stream.Collectors;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+
+    // Field
     // Password Encoder Bean
     private final PasswordEncoderBean passwordEncoderBean;
 
    // Email Masking
     public CustomerDto createCustomer(CustomerDto customerDto) {
+        // Embedded: getPersonalInfo
+        // Bcrypted
         customerDto.getPersonalInfo().setEmail(passwordEncoderBean.getPasswordEncoderBeanMethod().encode(customerDto.getPersonalInfo().getEmail()));
         CustomerEntity customerEntity = convertToEntity(customerDto);
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);

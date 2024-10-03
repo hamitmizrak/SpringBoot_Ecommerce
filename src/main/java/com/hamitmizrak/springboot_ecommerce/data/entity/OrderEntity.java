@@ -1,5 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
+import com.hamitmizrak.springboot_ecommerce.annotation.UniqueOrderNumber;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //@UniqueOrderNumber
     private String orderNumber;
     private Double totalAmount;
 

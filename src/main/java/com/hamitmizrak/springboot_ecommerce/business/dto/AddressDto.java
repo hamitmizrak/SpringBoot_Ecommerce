@@ -1,10 +1,12 @@
 package com.hamitmizrak.springboot_ecommerce.business.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AddressDto {
 
     private Long id;

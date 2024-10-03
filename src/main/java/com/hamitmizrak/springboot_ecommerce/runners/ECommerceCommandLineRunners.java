@@ -1,9 +1,8 @@
 package com.hamitmizrak.springboot_ecommerce.runners;
 
 import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
-import com.hamitmizrak.springboot_ecommerce.business.dto.CustomerDto;
-import com.hamitmizrak.springboot_ecommerce.business.services.IAddressServices;
-import com.hamitmizrak.springboot_ecommerce.business.services.ICustomerServices;
+import com.hamitmizrak.springboot_ecommerce.business.services.impl.AddressService;
+import com.hamitmizrak.springboot_ecommerce.business.services.impl.CustomerService;
 import com.hamitmizrak.springboot_ecommerce.data.entity.CustomerEntity;
 import com.hamitmizrak.springboot_ecommerce.data.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +35,8 @@ import java.util.List;
 public class ECommerceCommandLineRunners {
 
     // Injection
-    //private final IAddressServices iAddressService;
-    //private final ICustomerServices iCustomerServices;
+    private final AddressService iAddressServices;
+    private final CustomerService iCustomerServices;
     //private final IOrderServices iOrderServices;
     private final CustomerRepository customerRepository;
 
@@ -51,26 +50,39 @@ public class ECommerceCommandLineRunners {
         return city;
     }
 
-    // Data set
+    // Data set Address
     private void saveAddress() {
         for (int i = 0; i < 5; i++) {
-            /*
-            AddressDto addressDto = AddressDto.builder()
-                    .city(cityMethod()[i])
-                    .country("Türkiye")
-                    .street("cadde" + i)
-                    .postalCode("12345" + i)
-                    .build();
-            */
-            //iAddressService.addressServiceCreate(addressDto);
+            AddressDto addressDto = new AddressDto();
+            addressDto.setCity(cityMethod()[i]);
+            addressDto.setState("state"+i);
+            addressDto.setStreet("street"+i);
+            addressDto.setPostalCode("posta codes"+i);
+            iAddressServices.createAddress(addressDto);
         }
+    }
 
+    private void saveAddressAndCustomer() {
+        //saveAddress();
 
+        /*
+        PersonalInfoDto personalInfoDto=new PersonalInfoDto();
+        personalInfoDto.setEmail("hamitmizrak@gmail.com");
+        personalInfoDto.setFirstName("Hamit");
+        personalInfoDto.setLastName("Mızrak");
+        personalInfoDto.setTcNumber("123456789");
+
+        CustomerDto customerDto= CustomerDto.builder()
+                .address(iAddressServices.getAddressById(1L))
+                .personalInfo(personalInfoDto)
+                .build();
+        iCustomerServices.createCustomer(customerDto);
+        */
 
 
     }
 
-    private void saveAddressCustomer() {
+    private void repositoryQuery() {
         String firstName="hamit",lastName="mizrak";
         CustomerEntity customer = customerRepository.findByPersonalInfo_FirstNameAndPersonalInfoLastName(firstName,lastName);
 
@@ -135,6 +147,7 @@ public class ECommerceCommandLineRunners {
 
             // CUSTOMER
             //saveAddressCustomer();
+            saveAddressAndCustomer();
         };
     }
 

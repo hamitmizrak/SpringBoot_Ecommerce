@@ -44,7 +44,7 @@ public class AddressRepository {
             address.setId(rs.getLong("id"));
             address.setStreet(rs.getString("street"));
             address.setCity(rs.getString("city"));
-            address.setState(rs.getString("state"));
+            address.setCountry(rs.getString("country"));
             address.setPostalCode(rs.getString("postal_code"));
             return address;
         }
@@ -53,7 +53,7 @@ public class AddressRepository {
     // Create a new address
     public int save(AddressEntity address) {
         String sql = "INSERT INTO addresses (street, city, state, postal_code) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getState(), address.getPostalCode());
+        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getCountry(), address.getPostalCode());
     }
 
     // Get an address by ID
@@ -67,7 +67,7 @@ public class AddressRepository {
     // Update an existing address
     public int update(AddressEntity address) {
         String sql = "UPDATE addresses SET street = ?, city = ?, state = ?, postal_code = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getState(), address.getPostalCode(), address.getId());
+        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getCountry(), address.getPostalCode(), address.getId());
     }
 
     // Delete an address by ID

@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/api/addresses")
 public class AddressController {
 
+
     private final AddressService addressService;
 
     @Autowired
@@ -23,28 +24,28 @@ public class AddressController {
     // POST - Create a new address
     @PostMapping
     public ResponseEntity<AddressDto> createAddress(@RequestBody AddressDto addressDto) {
-        AddressDto savedAddress = addressService.createAddress(addressDto);
+        AddressDto savedAddress = addressService.addressServiceCreate(addressDto);
         return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
     }
 
     // GET - Find an address by ID
     @GetMapping("/{id}")
     public ResponseEntity<AddressDto> getAddressById(@PathVariable Long id) {
-        AddressDto addressDto = addressService.getAddressById(id);
+        AddressDto addressDto = addressService.addressServiceFindById(id);
         return new ResponseEntity<>(addressDto, HttpStatus.OK);
     }
 
     // GET - List all addresses
     @GetMapping
     public ResponseEntity<List<AddressDto>> getAllAddresses() {
-        List<AddressDto> addresses = addressService.getAllAddresses();
+        List<AddressDto> addresses = addressService.addressServiceList();
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     // PUT - Update an existing address
     @PutMapping("/{id}")
     public ResponseEntity<AddressDto> updateAddress(@PathVariable Long id, @RequestBody AddressDto addressDto) {
-        AddressDto updatedAddress = addressService.updateAddress(id, addressDto);
+        AddressDto updatedAddress = addressService.addressServiceUpdateFindById(id, addressDto);
         return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
     }
 
@@ -60,35 +61,13 @@ public class AddressController {
     // DELETE - Delete an address by ID
     @DeleteMapping
     public ResponseEntity<Void> deleteAddress(@RequestParam Long id) {
-        addressService.deleteAddress(id);
+        addressService.addressServiceDeleteFindById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    /*
-Aşağıda `@PathVariable` yerine `@RequestParam` kullanarak aynı silme işlemini nasıl yapabileceğinizi ve bu iki anotasyon arasındaki farkları.
-
-### 1. **@RequestParam Kullanarak DELETE İşlemi**
-
-`@RequestParam`'i kullanarak parametreyi sorgu parametresi (query parameter) olarak alabiliriz. Aşağıda, `@RequestParam`'in kullanıldığı örnek:
-
-#### Güncellenmiş `deleteAddress` Metodu:
-```java
-// DELETE - Delete an address by ID
-@DeleteMapping
-public ResponseEntity<Void> deleteAddress(@RequestParam Long id) {
-    addressService.deleteAddress(id);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-}
-```
-
-Bu versiyonda `id`, URL'in sonuna sorgu parametresi olarak eklenir, yani şu şekilde çağrılır:
-
-```
-DELETE /api/addresses?id=1
-```
+/*
 
 ### 2. **@PathVariable ve @RequestParam Arasındaki Farklar**
-
 #### 2.1. **@PathVariable**
 - **Kullanım amacı**: `@PathVariable`, URL yolundaki (path) değişkenleri yakalamak için kullanılır. Örneğin, `/addresses/1` gibi bir URL'de `1` değerini yakalamak için kullanılır.
 - **URL örneği**:

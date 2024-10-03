@@ -11,8 +11,8 @@ import java.util.Optional;
 // PagingAndSortingRepository<OrderEntity, Long>
 
 @Repository
-public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+public interface IOrderRepository extends JpaRepository<OrderEntity, Long> {
 
     // Delivered Query
-   Optional<OrderEntity> findByOrderNumber(String orderNumber);
+   //Optional<OrderEntity> findByOrderByNumber(String orderNumber);
 }

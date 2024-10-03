@@ -1,72 +1,83 @@
 package com.hamitmizrak.springboot_ecommerce.business.services.impl;
 
+import com.hamitmizrak.springboot_ecommerce.bean.ModelMapperBean;
 import com.hamitmizrak.springboot_ecommerce.business.dto.OrderDto;
+import com.hamitmizrak.springboot_ecommerce.business.services.IOrderServices;
 import com.hamitmizrak.springboot_ecommerce.data.entity.OrderEntity;
-import com.hamitmizrak.springboot_ecommerce.data.repository.OrderRepository;
+import com.hamitmizrak.springboot_ecommerce.data.repository.IOrderRepository;
 import com.hamitmizrak.springboot_ecommerce.exception._404_NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+// LOMBOK
+@RequiredArgsConstructor
+
 @Service
-public class OrderService {
+public class OrderService implements IOrderServices<OrderDto, OrderEntity> {
 
-    private final OrderRepository orderRepository;
+    // INJECTION
+    private final IOrderRepository iOrderRepository;
+    private final ModelMapperBean modelMapperBean;
 
-    @Autowired
-    public OrderService(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    /////////////////////////////////////////////////////////////////////////////////////
+    // MODEL MAPPER
+    @Override
+    public OrderDto entityToDto(OrderEntity orderEntity) {
+        return modelMapperBean.getModelMapperBeanMethod().map(orderEntity, OrderDto.class);
     }
 
-    public OrderDto createOrder(OrderDto orderDto) {
-        OrderEntity orderEntity = convertToEntity(orderDto);
-        OrderEntity savedOrder = orderRepository.save(orderEntity);
-        return convertToDto(savedOrder);
+    @Override
+    public OrderEntity dtoToEntity(OrderDto orderDto) {
+        return modelMapperBean.getModelMapperBeanMethod().map(orderDto, OrderEntity.class);
     }
 
-    public OrderDto getOrderById(Long id) {
-        OrderEntity orderEntity = orderRepository.findById(id)
+    /////////////////////////////////////////////////////////////////////////////////////
+    // CREATE (ORDER)
+    @Override
+    public OrderDto orderServiceCreate(OrderDto orderDto) {
+        OrderEntity orderEntity = dtoToEntity(orderDto);
+        OrderEntity savedOrder = iOrderRepository.save(orderEntity);
+        return entityToDto(savedOrder);
+    }
+
+    // LIST (ORDER)
+    @Override
+    public List<OrderDto> orderServiceList() {
+        List<OrderEntity> orderEntities = iOrderRepository.findAll();
+        return orderEntities.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+
+    // FIND BY ID (ORDER)
+    @Override
+    public OrderDto orderServiceFindById(Long id) {
+        OrderEntity orderEntity = iOrderRepository.findById(id)
                 .orElseThrow(() -> new _404_NotFoundException("Order not found with id: " + id));
-        return convertToDto(orderEntity);
+        return entityToDto(orderEntity);
     }
 
-    public List<OrderDto> getAllOrders() {
-        List<OrderEntity> orderEntities = orderRepository.findAll();
-        return orderEntities.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    public OrderDto updateOrder(Long id, OrderDto orderDto) {
-        OrderEntity existingOrder = orderRepository.findById(id)
+    // UPDATE (ORDER)
+    @Override
+    public OrderDto orderServiceUpdateFindById(Long id, OrderDto orderDto) {
+        OrderEntity orderEntityUpdate = iOrderRepository.findById(id)
                 .orElseThrow(() -> new _404_NotFoundException("Order not found with id: " + id));
-
-        existingOrder.setOrderNumber(orderDto.getOrderNumber());
-        existingOrder.setTotalAmount(orderDto.getTotalAmount());
-
-        OrderEntity updatedOrder = orderRepository.save(existingOrder);
-        return convertToDto(updatedOrder);
+        orderEntityUpdate.setName(orderDto.getName());
+        orderEntityUpdate.setNumber(orderDto.getNumber());
+        orderEntityUpdate.setPrice(orderDto.getPrice());
+        orderEntityUpdate.setTotalAmount(orderDto.getTotalAmount());
+        OrderEntity updatedOrder = iOrderRepository.save(orderEntityUpdate);
+        return entityToDto(updatedOrder);
     }
 
-    public void deleteOrder(Long id) {
-        OrderEntity existingOrder = orderRepository.findById(id)
+    // DELETE (ORDER)
+    @Override
+    public OrderDto orderServiceDeleteFindById(Long id) {
+        OrderEntity orderEntityDelete = iOrderRepository.findById(id)
                 .orElseThrow(() -> new _404_NotFoundException("Order not found with id: " + id));
-        orderRepository.delete(existingOrder);
+        iOrderRepository.delete(orderEntityDelete);
+        return entityToDto(orderEntityDelete);
     }
 
-    // Entity ve DTO dönüşüm metotları
-    private OrderEntity convertToEntity(OrderDto orderDto) {
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setOrderNumber(orderDto.getOrderNumber());
-        orderEntity.setTotalAmount(orderDto.getTotalAmount());
-        return orderEntity;
-    }
-
-    private OrderDto convertToDto(OrderEntity orderEntity) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(orderEntity.getId());
-        orderDto.setOrderNumber(orderEntity.getOrderNumber());
-        orderDto.setTotalAmount(orderEntity.getTotalAmount());
-        return orderDto;
-    }
 }

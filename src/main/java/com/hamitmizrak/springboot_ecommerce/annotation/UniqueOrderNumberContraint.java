@@ -1,6 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.annotation;
 
-import com.hamitmizrak.springboot_ecommerce.data.repository.OrderRepository;
+import com.hamitmizrak.springboot_ecommerce.data.repository.IOrderRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class UniqueOrderNumberContraint implements ConstraintValidator<UniqueOrderNumber, String> {
 
     // INJECTION
-    private final OrderRepository orderRepository;
+    private final IOrderRepository orderRepository;
 
     @Override
     public void initialize(UniqueOrderNumber constraintAnnotation) {
@@ -20,12 +20,12 @@ public class UniqueOrderNumberContraint implements ConstraintValidator<UniqueOrd
 
     @Override
     public boolean isValid(String orderNumber, ConstraintValidatorContext constraintValidatorContext) {
-        Boolean isOrderNumber=orderRepository.findByOrderNumber(orderNumber).isPresent();
-        System.out.println(isOrderNumber);
-        System.out.println(orderRepository.findByOrderNumber(orderNumber).isPresent());
-        if(isOrderNumber){
-            return false;
-        }
-        return true;
+        //Boolean isOrderNumber=orderRepository.findByOrderByNumber(orderNumber).isPresent();
+        //System.out.println(isOrderNumber);
+        //System.out.println(orderRepository.findByOrderByNumber(orderNumber).isPresent());
+        //if(isOrderNumber){
+        //    return false;
+       // }
+       return true;
     }
 }

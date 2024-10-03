@@ -18,25 +18,25 @@ private String tcNumber;
 // PagingAndSortingRepository<OrderEntity, Long>
 
 @Repository
-public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
     // İsme Göre Veriyi getir
-    CustomerEntity findByPersonalInfo_FirstName(String firstName);
+    //CustomerEntity findByPersonalInfo_FirstName(String firstName);
 
     // Derived query: First name ve last name'e göre müşteri bul
-    CustomerEntity findByPersonalInfo_FirstNameAndPersonalInfoLastName(String firstName, String lastName);
+    //CustomerEntity findByPersonalInfo_FirstNameAndPersonalInfoLastName(String firstName, String lastName);
 
     // Derived query: Email'e göre müşteri bul
-    CustomerEntity findByPersonalInfoEmail(String email);
+    //CustomerEntity findByPersonalInfoEmail(String email);
 
     // Derived query: Adres şehrine göre müşteri bul
-    List<CustomerEntity> findByAddressCity(String city);
+    //List<CustomerEntity> findByAddressEntity_City(String city);
 
     // Derived query: Şehir ve postal kod'a göre müşteri bul
-    List<CustomerEntity> findByAddressCityAndAddressPostalCode(String city, String postalCode);
+    //List<CustomerEntity> findByAddressEntityCityAndAddressPostalCode(String city, String postalCode);
 
     // Derived query: T.C. numarasına göre müşteri bul
-    CustomerEntity findByPersonalInfoTcNumber(String tcNumber);
+    //CustomerEntity findByPersonalInfoTcNumber(String tcNumber);
 
     // JOIN JPQL
 }

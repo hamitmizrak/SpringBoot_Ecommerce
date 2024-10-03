@@ -1,10 +1,9 @@
 package com.hamitmizrak.springboot_ecommerce.runners;
 
-import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
 import com.hamitmizrak.springboot_ecommerce.business.services.impl.AddressService;
 import com.hamitmizrak.springboot_ecommerce.business.services.impl.CustomerService;
 import com.hamitmizrak.springboot_ecommerce.data.entity.CustomerEntity;
-import com.hamitmizrak.springboot_ecommerce.data.repository.CustomerRepository;
+import com.hamitmizrak.springboot_ecommerce.data.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
@@ -38,7 +37,7 @@ public class ECommerceCommandLineRunners {
     private final AddressService iAddressServices;
     private final CustomerService iCustomerServices;
     //private final IOrderServices iOrderServices;
-    private final CustomerRepository customerRepository;
+    private final ICustomerRepository customerRepository;
 
     private String[] cityMethod() {
         String[] city = new String[5];
@@ -53,12 +52,13 @@ public class ECommerceCommandLineRunners {
     // Data set Address
     private void saveAddress() {
         for (int i = 0; i < 5; i++) {
+            /*
             AddressDto addressDto = new AddressDto();
             addressDto.setCity(cityMethod()[i]);
             addressDto.setState("state"+i);
             addressDto.setStreet("street"+i);
             addressDto.setPostalCode("posta codes"+i);
-            iAddressServices.createAddress(addressDto);
+            iAddressServices.createAddress(addressDto);*/
         }
     }
 
@@ -78,31 +78,44 @@ public class ECommerceCommandLineRunners {
                 .build();
         iCustomerServices.createCustomer(customerDto);
         */
-
-
     }
 
-    private void repositoryQuery() {
+    private void repositoryNameSurname(){
+        /*
         String firstName="hamit",lastName="mizrak";
         CustomerEntity customer = customerRepository.findByPersonalInfo_FirstNameAndPersonalInfoLastName(firstName,lastName);
-
         if (customer != null) {
-            System.out.println("Var: " + customer.  getPersonalInfo().getFirstName() + " " + customer.getPersonalInfo().getLastName());
+            System.out.println("Var: " + customer.  getPersonalInfo().getName() + " " + customer.getPersonalInfo().getSurname());
         } else {
             System.out.println("Yok with firstName: " + firstName + " and lastName: " + lastName);
         }
+        */
+    }
 
+    private void repositoryTcNumber(){
         // TC NUMBER
-        CustomerEntity customer2 = customerRepository.findByPersonalInfoTcNumber("123456789");
-        System.out.println(customer2.getPersonalInfo().getTcNumber());
+        /*
+        String tcNumber="123456789";
+        CustomerEntity customer2 = customerRepository.findByPersonalInfoTcNumber(tcNumber);
+        //System.out.println(customer2.getPersonalInfo().getTcNumber());
+        if (customer2 != null) {
+            System.out.println("TC: " + customer2.getPersonalInfo().getTcNumber() + " " + customer2.getPersonalInfo().getSurname());
+        } else {
+            System.out.println("Yok with tc number: " + tcNumber);
+        }
+        */
+    }
+
+    private void repositoryQuery() {
 
         // CITY
+        /*
         String city="malatya",  postalCode="44";
         List<CustomerEntity> customers3 = customerRepository.findByAddressCityAndAddressPostalCode(city, postalCode);
 
         if (!customers3.isEmpty()) {
             customers3.forEach(temp -> {
-                System.out.println("Şehirrr: " + temp.getPersonalInfo().getFirstName() + " lives in " + city + " with postal code " + postalCode);
+                System.out.println("Şehirrr: " + temp.getPersonalInfo().getName() + " lives in " + city + " with postal code " + postalCode);
             });
         } else {
             System.out.println("No customers3 found in city44: " + city + " with postal code: " + postalCode);
@@ -127,14 +140,15 @@ public class ECommerceCommandLineRunners {
         if (!customers.isEmpty()) {
             System.out.println("yes Customers in city44: " + city44);
             customers.forEach(customer44 -> {
-                System.out.println("Customer: " + customer44.getPersonalInfo().getFirstName() + " " + customer44.getPersonalInfo().getLastName());
+                System.out.println("Customer: " + customer44.getPersonalInfo().getName() + " " + customer44.getPersonalInfo().getSurname());
             });
         } else {
             System.out.println("No customers found in city44: " + city44);
         }
 
-    }
+         */
 
+    }
 
     @Bean
     public CommandLineRunner getCommandLineRunner() {
@@ -147,7 +161,10 @@ public class ECommerceCommandLineRunners {
 
             // CUSTOMER
             //saveAddressCustomer();
-            saveAddressAndCustomer();
+            //saveAddressAndCustomer();
+
+            repositoryNameSurname();
+            repositoryTcNumber();
         };
     }
 

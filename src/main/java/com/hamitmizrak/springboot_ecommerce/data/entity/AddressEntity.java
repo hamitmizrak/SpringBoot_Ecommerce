@@ -1,5 +1,6 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
+import com.hamitmizrak.springboot_ecommerce.audit.AuditingAwareBaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

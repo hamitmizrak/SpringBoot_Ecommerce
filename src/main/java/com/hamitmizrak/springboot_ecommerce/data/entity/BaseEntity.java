@@ -1,6 +1,7 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hamitmizrak.springboot_ecommerce.audit.AuditingAwareBaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ import java.util.Date;
 // Ortak kolonları buraya ekliyoruz.
 @MappedSuperclass
 @JsonIgnoreProperties(value = {"created_date","last_date"},allowGetters = true) // Frontend gitmeyecek kolonlar
-abstract public class BaseEntity implements Serializable {
+abstract public class BaseEntity extends AuditingAwareBaseEntity implements Serializable {
 
     // Serileştirme
     public static final Long serialVersionUID = 1L;
@@ -33,26 +34,6 @@ abstract public class BaseEntity implements Serializable {
     @Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
     protected Long id;
 
-    // AUDITING
-    // Kim Ekledi
-    @CreatedBy
-    @Column(name = "created_user")
-    protected String createdUser;
-
-    // Kim Ne Zaman Ekledi
-    @CreatedDate
-    @Column(name = "created_date")
-    protected Date createdDate;
-
-    // Kim Güncelledi
-    @LastModifiedBy
-    @Column(name = "last_user")
-    protected String lastUser;
-
-    // Kim Ne Zaman Güncelledi
-    @LastModifiedDate
-    @Column(name = "last_date")
-    protected Date lastDate;
 
     // DATE
     @CreationTimestamp

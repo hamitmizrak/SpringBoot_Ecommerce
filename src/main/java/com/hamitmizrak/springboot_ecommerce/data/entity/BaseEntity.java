@@ -1,15 +1,13 @@
 package com.hamitmizrak.springboot_ecommerce.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hamitmizrak.springboot_ecommerce.audit.AuditingAwareBaseEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,45 +17,25 @@ import java.util.Date;
 @Setter
 @ToString
 
-// Ortak kolonları buraya ekliyoruz.
+// abstract Class
 @MappedSuperclass
-@JsonIgnoreProperties(value = {"created_date","last_date"},allowGetters = true) // Frontend gitmeyecek kolonlar
-abstract public class BaseEntity implements Serializable {
+@JsonIgnoreProperties(value = {},allowGetters = true) // Json, burada verdiğim özellikleri takip etme
+abstract public class BaseEntity extends AuditingAwareBaseEntity implements Serializable {
 
-    // Serileştirme
+    // SERILESTIRME
     public static final Long serialVersionUID = 1L;
 
-    // ID
+    // Role ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
+    @Column(name = "id")
     protected Long id;
 
-    // AUDITING
-    // Kim Ekledi
-    @CreatedBy
-    @Column(name = "created_user")
-    protected String createdUser;
-
-    // Kim Ne Zaman Ekledi
-    @CreatedDate
-    @Column(name = "created_date")
-    protected Date createdDate;
-
-    // Kim Güncelledi
-    @LastModifiedBy
-    @Column(name = "last_user")
-    protected String lastUser;
-
-    // Kim Ne Zaman Güncelledi
-    @LastModifiedDate
-    @Column(name = "last_date")
-    protected Date lastDate;
-
-    // DATE
+    // System Created Date
+    @Builder.Default
     @CreationTimestamp
-    //@Temporal(TemporalType.DATE) // yıl ay gün
-    //@Temporal(TemporalType.TIME) // saat dakika saniye
-    @Temporal(TemporalType.TIMESTAMP) // yıl ay gün saat dakika saniye
-    protected Date systemDate = new Date(System.currentTimeMillis());
-}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "system_created_date")
+    protected Date systemCreatedDate=new Date(System.currentTimeMillis());
+
+} //end BaseEntity

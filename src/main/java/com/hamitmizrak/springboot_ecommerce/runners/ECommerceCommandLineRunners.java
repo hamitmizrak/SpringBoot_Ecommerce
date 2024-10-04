@@ -134,9 +134,6 @@ public class ECommerceCommandLineRunners {
 
     }
 
-
-
-
     // Role ve Register Ekleme
     private void roleAndRegisterCreate(){
         //log.info("role And Register Create");
@@ -154,7 +151,7 @@ public class ECommerceCommandLineRunners {
                 }
             });
 
-            for (long i = 1; i <=3 ; i++) {
+            for (long i = 1; i <=1 ; i++) {
                 // REGISTER
                 RegisterDto registerDto=new RegisterDto();
                 registerDto.setRegisterNickName("nickname"+i);

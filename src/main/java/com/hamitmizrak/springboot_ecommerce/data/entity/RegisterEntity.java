@@ -34,7 +34,7 @@ public class RegisterEntity extends AuditingAwareBaseEntity implements Serializa
     // SERILESTIRME
     public static final Long serialVersionUID = 1L;
 
-    // Role ID
+    // Register ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "register_id")

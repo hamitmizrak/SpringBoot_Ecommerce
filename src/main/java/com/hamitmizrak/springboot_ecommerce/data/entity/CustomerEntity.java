@@ -24,6 +24,8 @@ Order  >------<  Product
 @Table(name = "customers")
 public class CustomerEntity {
 
+    // H2DB,Postgresql: @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // MYSQL: @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

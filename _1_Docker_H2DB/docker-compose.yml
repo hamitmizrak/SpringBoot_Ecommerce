@@ -1,0 +1,18 @@
+
+version: '3.1'
+
+services:
+  backend:
+    container_name: ecommerce_container
+    image: ecommerce_image
+    restart: always
+    build: ..
+    ports:
+      - "3333:3333"
+    networks:
+      - ecommerce_network
+
+networks:
+  ecommerce_network:
+    name: ecommerce_network
+    driver: bridge

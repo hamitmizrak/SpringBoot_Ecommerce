@@ -112,7 +112,7 @@ public class RegisterApiImpl implements IRegisterApi<RegisterDto> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // EMAIL CONFIRMATION
-    // EMAIL CONFIRMATION
+    // Email'e  tıklandıktan sonra Ekranımıza gelecek HTML5 Sayfası
     //http://localhost:4444/register/api/v1/confirm?token=ca478481-5f7a-406b-aaa4-2012ebe1afb4
     @GetMapping("/confirm")
     public ResponseEntity<String> emailTokenConfirmation(@RequestParam("token") String token) {

@@ -22,6 +22,7 @@ public interface IRegisterRepository extends CrudRepository<RegisterEntity,Long>
     // select * from Roles as rol where rol.role_name
     Optional<RegisterEntity> findByRegisterEmail(String email);
 
+    // Role(Many) - Register(Many)
     // Query: Karmaşık sorgular için @Qery kullanıyoruz
     @Query("select reg from Registers reg join reg.roles rol where rol.roleName=:roleNameParam")
     List<RegisterEntity> findAllByRegisterInJoinRolesRoleName(@Param("roleNameParam") String roleName );

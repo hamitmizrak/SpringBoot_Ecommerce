@@ -1,9 +1,37 @@
 #!/bin/bash
 
 
+
+maven_build(){
+  mvn -v
+  ls -al
+  mvn clean
+  mvn package -DskipTests
+}
+maven_build
+
+docker_nginx_build(){
+  docker search nginx
+  docker pull nginx
+  docker container ps
+#  docker container run --publish 1111:80 nginx
+#docker container run -p 1111:80 --name nginx_container --rm -d nginx
+docker container run -p 1111:80 --name nginx_container --rm  nginx
+}
+#docker_nginx_build
+
+docker_build(){
+#  docker-compose up -d
+  docker-compose up
+}
+docker_build
+
 # Docker Build
 # docker-compose up
 # docker-compose up -d
+
+
+
 
 curl_data(){
  curl -X 'POST' \

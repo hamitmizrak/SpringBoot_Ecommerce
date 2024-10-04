@@ -5,13 +5,14 @@ import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
 import com.hamitmizrak.springboot_ecommerce.business.dto.CustomerDto;
 import com.hamitmizrak.springboot_ecommerce.business.dto.OrderDto;
 import com.hamitmizrak.springboot_ecommerce.business.dto.PersonalInfoDto;
-import com.hamitmizrak.springboot_ecommerce.data.embedded.EmbeddableCustomer;
+import com.hamitmizrak.springboot_ecommerce.data.embedded.PersonalInfo;
 import com.hamitmizrak.springboot_ecommerce.data.entity.AddressEntity;
 import com.hamitmizrak.springboot_ecommerce.data.entity.CustomerEntity;
 import com.hamitmizrak.springboot_ecommerce.data.entity.OrderEntity;
-import com.hamitmizrak.springboot_ecommerce.data.repository.ICustomerRepository;
+import com.hamitmizrak.springboot_ecommerce.data.repository.CustomerRepository;
 import com.hamitmizrak.springboot_ecommerce.exception._404_NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,13 +24,12 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerService {
 
-    private final ICustomerRepository  customerRepository;
+    private final CustomerRepository customerRepository;
+    // Password Encoder Bean
     private final PasswordEncoderBean passwordEncoderBean;
 
-    // Email Masking
+   // Email Masking
     public CustomerDto createCustomer(CustomerDto customerDto) {
-        // Embedded: getPersonalInfo
-        // Bcrypted
         customerDto.getPersonalInfo().setEmail(passwordEncoderBean.getPasswordEncoderBeanMethod().encode(customerDto.getPersonalInfo().getEmail()));
         CustomerEntity customerEntity = convertToEntity(customerDto);
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
@@ -39,9 +39,6 @@ public class CustomerService {
     public CustomerDto getCustomerById(Long id) {
         CustomerEntity customerEntity = customerRepository.findById(id)
                 .orElseThrow(() -> new _404_NotFoundException("Customer not found with id: " + id));
-        //
-        //OrderEntity orderEntity= new OrderEntity();
-        //orderEntity.setCustomerEntity(customerEntity);
         return convertToDto(customerEntity);
     }
 
@@ -57,9 +54,9 @@ public class CustomerService {
                 .orElseThrow(() -> new _404_NotFoundException("Customer not found with id: " + id));
 
         // Gömülü personalInfo güncelleme
-        existingCustomer.setEmbeddableCustomer(convertToEntity(customerDto.getPersonalInfo()));
+        existingCustomer.setPersonalInfo(convertToEntity(customerDto.getPersonalInfo()));
         // Adres güncelleme
-        existingCustomer.setAddressEntity(convertToEntity(customerDto.getAddress()));
+        existingCustomer.setAddress(convertToEntity(customerDto.getAddress()));
 
         CustomerEntity updatedCustomer = customerRepository.save(existingCustomer);
         return convertToDto(updatedCustomer);
@@ -74,13 +71,13 @@ public class CustomerService {
     // DTO to Entity dönüşümleri (daha önce tanımladık)
     private CustomerEntity convertToEntity(CustomerDto customerDto) {
         CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setEmbeddableCustomer(convertToEntity(customerDto.getPersonalInfo()));
-        customerEntity.setAddressEntity(convertToEntity(customerDto.getAddress()));
+        customerEntity.setPersonalInfo(convertToEntity(customerDto.getPersonalInfo()));
+        customerEntity.setAddress(convertToEntity(customerDto.getAddress()));
 
         List<OrderEntity> orderEntities = customerDto.getOrders().stream()
                 .map(this::convertToEntity).collect(Collectors.toList());
         customerEntity.setOrders(orderEntities);
-        orderEntities.forEach(order -> order.setCustomerEntity(customerEntity));
+        orderEntities.forEach(order -> order.setCustomer(customerEntity));
 
         return customerEntity;
     }
@@ -88,8 +85,8 @@ public class CustomerService {
     private CustomerDto convertToDto(CustomerEntity customerEntity) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customerEntity.getId());
-        customerDto.setPersonalInfo(convertToDto(customerEntity.getEmbeddableCustomer()));
-        customerDto.setAddress(convertToDto(customerEntity.getAddressEntity()));
+        customerDto.setPersonalInfo(convertToDto(customerEntity.getPersonalInfo()));
+        customerDto.setAddress(convertToDto(customerEntity.getAddress()));
 
         List<OrderDto> orderDtos = customerEntity.getOrders().stream()
                 .map(this::convertToDto).collect(Collectors.toList());
@@ -98,25 +95,21 @@ public class CustomerService {
         return customerDto;
     }
 
-    private EmbeddableCustomer convertToEntity(PersonalInfoDto personalInfoDto) {
-        EmbeddableCustomer personalInfo = new EmbeddableCustomer();
-        personalInfo.setName(personalInfoDto.getName());
-        personalInfo.setSurname(personalInfoDto.getSurname());
-        personalInfo.setNotes(personalInfoDto.getNotes());
-        personalInfo.setVatNumber(personalInfoDto.getVatNumber());
-        personalInfo.setTcNumber(personalInfoDto.getTcNumber());
+    private PersonalInfo convertToEntity(PersonalInfoDto personalInfoDto) {
+        PersonalInfo personalInfo = new PersonalInfo();
+        personalInfo.setFirstName(personalInfoDto.getFirstName());
+        personalInfo.setLastName(personalInfoDto.getLastName());
         personalInfo.setEmail(personalInfoDto.getEmail());
+        personalInfo.setTcNumber(personalInfoDto.getTcNumber());
         return personalInfo;
     }
 
-    private PersonalInfoDto convertToDto(EmbeddableCustomer personalInfo) {
+    private PersonalInfoDto convertToDto(PersonalInfo personalInfo) {
         PersonalInfoDto personalInfoDto = new PersonalInfoDto();
-        personalInfoDto.setName(personalInfo.getName());
-        personalInfoDto.setSurname(personalInfo.getSurname());
-        personalInfoDto.setNotes(personalInfo.getNotes());
-        personalInfoDto.setVatNumber(personalInfo.getVatNumber());
-        personalInfoDto.setTcNumber(personalInfo.getTcNumber());
+        personalInfoDto.setFirstName(personalInfo.getFirstName());
+        personalInfoDto.setLastName(personalInfo.getLastName());
         personalInfoDto.setEmail(personalInfo.getEmail());
+        personalInfoDto.setTcNumber(personalInfo.getTcNumber());
         return personalInfoDto;
     }
 
@@ -124,7 +117,7 @@ public class CustomerService {
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setStreet(addressDto.getStreet());
         addressEntity.setCity(addressDto.getCity());
-        addressEntity.setCountry(addressDto.getCountry());
+        addressEntity.setState(addressDto.getState());
         addressEntity.setPostalCode(addressDto.getPostalCode());
         return addressEntity;
     }
@@ -134,16 +127,14 @@ public class CustomerService {
         addressDto.setId(addressEntity.getId());
         addressDto.setStreet(addressEntity.getStreet());
         addressDto.setCity(addressEntity.getCity());
-        addressDto.setCountry(addressEntity.getCountry());
+        addressDto.setState(addressEntity.getState());
         addressDto.setPostalCode(addressEntity.getPostalCode());
         return addressDto;
     }
 
     private OrderEntity convertToEntity(OrderDto orderDto) {
         OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setName(orderDto.getName());
-        orderEntity.setNumber(orderDto.getNumber());
-        orderEntity.setPrice(orderDto.getPrice());
+        orderEntity.setOrderNumber(orderDto.getOrderNumber());
         orderEntity.setTotalAmount(orderDto.getTotalAmount());
         return orderEntity;
     }
@@ -151,9 +142,7 @@ public class CustomerService {
     private OrderDto convertToDto(OrderEntity orderEntity) {
         OrderDto orderDto = new OrderDto();
         orderDto.setId(orderEntity.getId());
-        orderDto.setName(orderEntity.getName());
-        orderDto.setPrice(orderEntity.getPrice());
-        orderDto.setNumber(orderEntity.getNumber());
+        orderDto.setOrderNumber(orderEntity.getOrderNumber());
         orderDto.setTotalAmount(orderEntity.getTotalAmount());
         return orderDto;
     }

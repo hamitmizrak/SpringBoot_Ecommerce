@@ -8,6 +8,7 @@ package com.hamitmizrak.springboot_ecommerce.data.repository;
 //public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
 //}
 
+
 import com.hamitmizrak.springboot_ecommerce.data.entity.AddressEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,18 +20,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-/*
-@Repository
-public interface AddressRepository  CrudRepository<AddresEntity, Long>
-public interface AddressRepository  JpaRepository<OrderEntity, Long>
- */
 @Repository
 public class AddressRepository {
 
-    // Injection
     private final JdbcTemplate jdbcTemplate;
 
-    // Parametreli Constructor
     @Autowired
     public AddressRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -44,7 +38,7 @@ public class AddressRepository {
             address.setId(rs.getLong("id"));
             address.setStreet(rs.getString("street"));
             address.setCity(rs.getString("city"));
-            address.setCountry(rs.getString("country"));
+            address.setState(rs.getString("state"));
             address.setPostalCode(rs.getString("postal_code"));
             return address;
         }
@@ -53,7 +47,7 @@ public class AddressRepository {
     // Create a new address
     public int save(AddressEntity address) {
         String sql = "INSERT INTO addresses (street, city, state, postal_code) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getCountry(), address.getPostalCode());
+        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getState(), address.getPostalCode());
     }
 
     // Get an address by ID
@@ -67,7 +61,7 @@ public class AddressRepository {
     // Update an existing address
     public int update(AddressEntity address) {
         String sql = "UPDATE addresses SET street = ?, city = ?, state = ?, postal_code = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getCountry(), address.getPostalCode(), address.getId());
+        return jdbcTemplate.update(sql, address.getStreet(), address.getCity(), address.getState(), address.getPostalCode(), address.getId());
     }
 
     // Delete an address by ID

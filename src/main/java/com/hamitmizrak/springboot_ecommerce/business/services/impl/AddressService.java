@@ -1,45 +1,29 @@
 package com.hamitmizrak.springboot_ecommerce.business.services.impl;
 
-import com.hamitmizrak.springboot_ecommerce.bean.ModelMapperBean;
 import com.hamitmizrak.springboot_ecommerce.business.dto.AddressDto;
-import com.hamitmizrak.springboot_ecommerce.business.services.IAddressServices;
 import com.hamitmizrak.springboot_ecommerce.data.entity.AddressEntity;
 import com.hamitmizrak.springboot_ecommerce.data.repository.AddressRepository;
 import com.hamitmizrak.springboot_ecommerce.exception._404_NotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// LOMBOK
-@RequiredArgsConstructor
-
 @Service
-public class AddressService implements IAddressServices<AddressDto, AddressEntity> {
+public class AddressService {
 
-    // Field
     private final AddressRepository addressRepository;
-    private final ModelMapperBean modelMapperBean;
 
-
-    //////////////////////////////////////////////////////////////////////////
-    @Override
-    public AddressDto entityToDto(AddressEntity addressEntity) {
-        return modelMapperBean.getModelMapperBeanMethod().map(addressEntity, AddressDto.class);
+    @Autowired
+    public AddressService(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
     }
 
-    @Override
-    public AddressEntity dtoToEntity(AddressDto addressDto) {
-        return modelMapperBean.getModelMapperBeanMethod().map(addressDto, AddressEntity.class);
-    }
-
-    ///////////////////////////////////////////////////////////////
-    // CREATE
-    @Override
-    public AddressDto addressServiceCreate(AddressDto addressDto) {
-        AddressEntity addressEntity = dtoToEntity(addressDto);
+    // Create a new address
+    public AddressDto createAddress(AddressDto addressDto) {
+        AddressEntity addressEntity = convertToEntity(addressDto);
         // JDBC Template save işlemi
         int rowsAffected = addressRepository.save(addressEntity);
         if (rowsAffected == 0) {
@@ -48,61 +32,77 @@ public class AddressService implements IAddressServices<AddressDto, AddressEntit
         // Yeni kaydedilen adres ID'sini alıyoruz
         Long newId = getLastInsertedId();
         addressEntity.setId(newId);
-        return entityToDto(addressEntity);
+        return convertToDto(addressEntity);
     }
 
-    // LIST
-    @Override
-    public List<AddressDto> addressServiceList() {
-        //return List.of();
-        List<AddressEntity> addresses = addressRepository.findAll();
-        return addresses.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    // FIND BY ID
-    @Override
-    public AddressDto addressServiceFindById(Long id) {
+    // Get an address by ID
+    public AddressDto getAddressById(Long id) {
         Optional<AddressEntity> addressEntity = addressRepository.findById(id);
         if (addressEntity.isPresent()) {
-            return entityToDto(addressEntity.get());
+            return convertToDto(addressEntity.get());
         } else {
             throw new _404_NotFoundException("Address not found with id: " + id);
         }
     }
 
-    // UPDATE
-    @Override
-    public AddressDto addressServiceUpdateFindById(Long id, AddressDto addressDto) {
-        Optional<AddressEntity> addressUpdate = addressRepository.findById(id);
-        if (!addressUpdate.isPresent()) {
+    // Update an existing address
+    public AddressDto updateAddress(Long id, AddressDto addressDto) {
+        Optional<AddressEntity> existingAddressOptional = addressRepository.findById(id);
+        if (!existingAddressOptional.isPresent()) {
             throw new _404_NotFoundException("Address not found with id: " + id);
         }
 
-        AddressEntity existingAddress = addressUpdate.get();
+        AddressEntity existingAddress = existingAddressOptional.get();
         existingAddress.setStreet(addressDto.getStreet());
         existingAddress.setCity(addressDto.getCity());
-        existingAddress.setCountry(addressDto.getCountry());
+        existingAddress.setState(addressDto.getState());
         existingAddress.setPostalCode(addressDto.getPostalCode());
 
         int rowsAffected = addressRepository.update(existingAddress);
         if (rowsAffected == 0) {
             throw new RuntimeException("Failed to update the address.");
         }
-        return entityToDto(existingAddress);
+
+        return convertToDto(existingAddress);
     }
 
-    // DELETE
-    @Override
-    public AddressDto addressServiceDeleteFindById(Long id) {
-        Optional<AddressEntity> addressDelete = addressRepository.findById(id);
-        if (!addressDelete.isPresent()) {
+    // Delete an address by ID
+    public void deleteAddress(Long id) {
+        Optional<AddressEntity> existingAddress = addressRepository.findById(id);
+        if (!existingAddress.isPresent()) {
             throw new _404_NotFoundException("Address not found with id: " + id);
         }
         int rowsAffected = addressRepository.deleteById(id);
         if (rowsAffected == 0) {
             throw new RuntimeException("Failed to delete the address.");
         }
-        return entityToDto(addressDelete.get());
+    }
+
+    // Get all addresses
+    public List<AddressDto> getAllAddresses() {
+        List<AddressEntity> addresses = addressRepository.findAll();
+        return addresses.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    // DTO to Entity conversion
+    private AddressEntity convertToEntity(AddressDto addressDto) {
+        AddressEntity addressEntity = new AddressEntity();
+        addressEntity.setStreet(addressDto.getStreet());
+        addressEntity.setCity(addressDto.getCity());
+        addressEntity.setState(addressDto.getState());
+        addressEntity.setPostalCode(addressDto.getPostalCode());
+        return addressEntity;
+    }
+
+    // Entity to DTO conversion
+    private AddressDto convertToDto(AddressEntity addressEntity) {
+        AddressDto addressDto = new AddressDto();
+        addressDto.setId(addressEntity.getId());
+        addressDto.setStreet(addressEntity.getStreet());
+        addressDto.setCity(addressEntity.getCity());
+        addressDto.setState(addressEntity.getState());
+        addressDto.setPostalCode(addressEntity.getPostalCode());
+        return addressDto;
     }
 
     // JDBC Template için yeni eklenen adresin ID'sini almak için bir metot
@@ -110,6 +110,7 @@ public class AddressService implements IAddressServices<AddressDto, AddressEntit
         return addressRepository.getLastInsertedId();
     }
 }
+
 
 /*
  Açıklamalar:
@@ -121,4 +122,81 @@ deleteById(Long id): Belirli bir ID'ye sahip adresi silmek için kullanılan SQL
 findAll(): Tüm adresleri listelemek için kullanılan SQL sorgusu.
 Bu getLastInsertedId() metodu sayesinde, veritabanına yeni bir kayıt ekledikten sonra son eklenen kaydın ID'sine ulaşabiliyoruz. Bu özellikle, yeni oluşturulan nesneyi tekrar geri döndürmek için kullanışlıdır.
  */
+
+
+/*
+@Service
+public class AddressService {
+
+
+    private final AddressRepository addressRepository;
+
+    @Autowired
+    public AddressService(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
+
+    // Create a new address
+    public AddressDto createAddress(AddressDto addressDto) {
+        AddressEntity addressEntity = convertToEntity(addressDto);
+        AddressEntity savedAddress = addressRepository.save(addressEntity);
+        return convertToDto(savedAddress);
+    }
+
+    // Get an address by ID
+    public AddressDto getAddressById(Long id) {
+        AddressEntity addressEntity = addressRepository.findById(id)
+                .orElseThrow(() -> new _404_NotFoundException("Address not found with id: " + id));
+        return convertToDto(addressEntity);
+    }
+
+    // Update an existing address
+    public AddressDto updateAddress(Long id, AddressDto addressDto) {
+        AddressEntity existingAddress = addressRepository.findById(id)
+                .orElseThrow(() -> new _404_NotFoundException("Address not found with id: " + id));
+
+        existingAddress.setStreet(addressDto.getStreet());
+        existingAddress.setCity(addressDto.getCity());
+        existingAddress.setState(addressDto.getState());
+        existingAddress.setPostalCode(addressDto.getPostalCode());
+
+        AddressEntity updatedAddress = addressRepository.save(existingAddress);
+        return convertToDto(updatedAddress);
+    }
+
+    // Delete an address by ID
+    public void deleteAddress(Long id) {
+        AddressEntity existingAddress = addressRepository.findById(id)
+                .orElseThrow(() -> new _404_NotFoundException("Address not found with id: " + id));
+        addressRepository.delete(existingAddress);
+    }
+
+    // Get all addresses
+    public List<AddressDto> getAllAddresses() {
+        List<AddressEntity> addresses = addressRepository.findAll();
+        return addresses.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    // DTO to Entity conversion
+    private AddressEntity convertToEntity(AddressDto addressDto) {
+        AddressEntity addressEntity = new AddressEntity();
+        addressEntity.setStreet(addressDto.getStreet());
+        addressEntity.setCity(addressDto.getCity());
+        addressEntity.setState(addressDto.getState());
+        addressEntity.setPostalCode(addressDto.getPostalCode());
+        return addressEntity;
+    }
+
+    // Entity to DTO conversion
+    private AddressDto convertToDto(AddressEntity addressEntity) {
+        AddressDto addressDto = new AddressDto();
+        addressDto.setId(addressEntity.getId());
+        addressDto.setStreet(addressEntity.getStreet());
+        addressDto.setCity(addressEntity.getCity());
+        addressDto.setState(addressEntity.getState());
+        addressDto.setPostalCode(addressEntity.getPostalCode());
+        return addressDto;
+    }
+    }
+     */
 

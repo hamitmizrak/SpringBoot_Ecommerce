@@ -32,25 +32,25 @@ abstract public class AuditingAwareBaseEntity implements Serializable {
 
     // AUDITING
     // Kim ekledi
-   // @JsonIgnore // Backte giden veride bunu göstermek
+   @JsonIgnore // Backte giden veride bunu göstermek
     @CreatedBy
     @Column(name="created_user")
     protected String createdUser;
 
     // Kim ne zaman ekledi
-    //@JsonIgnore // Backte giden veride bunu göstermek
+    @JsonIgnore // Backte giden veride bunu göstermek
     @CreatedDate
     @Column(name="created_date")
     protected Date createdDate;
 
     // Kim güncelledi
-    //@JsonIgnore // Backte giden veride bunu göstermek
+    @JsonIgnore // Backte giden veride bunu göstermek
     @LastModifiedBy
     @Column(name="last_user")
     protected String lastUser;
 
     // Kim ne zaman güncelledi
-    //@JsonIgnore // Backte giden veride bunu göstermek
+    @JsonIgnore // Backte giden veride bunu göstermek
     @LastModifiedDate
     @Column(name="last_date")
     protected Date lastDate;

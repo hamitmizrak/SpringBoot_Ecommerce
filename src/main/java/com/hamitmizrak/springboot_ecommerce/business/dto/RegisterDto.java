@@ -79,7 +79,7 @@ public class RegisterDto extends AuditingAwareBaseDto implements Serializable {
     // Kullanıcı üye olurken kilitli olsun ancak mail onayı ile aktifleştirilsin
     public Boolean isAccountNonLocked;
 
-    // Kullanıcı hesabını pasit duruma getirme
+    // Kullanıcı hesabını pasif duruma getirme
     public Boolean isAccountNonExpired;
 
     // Kullanıcı Hesap Bilgi Süresi (Authorization)

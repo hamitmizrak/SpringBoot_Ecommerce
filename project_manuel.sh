@@ -22,10 +22,19 @@ docker container run -p 1111:80 --name nginx_container --rm  nginx
 
 docker_build(){
 #  docker-compose up -d
+
   docker-compose up
 }
 docker_build
 
+
+docker_postgres_build(){
+  docker ps
+  winpty docker container exec -it postgres_spring bash
+  psql -h localhost -U postgres
+  CREATE DATABASE blog;
+}
+docker_postgres_build
 # Docker Build
 # docker-compose up
 # docker-compose up -d

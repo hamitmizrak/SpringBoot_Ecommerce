@@ -41,7 +41,7 @@ services:
       - "3333:3333"
     volumes:
       - postgres_volume_data:/var/lib/postgresql/data
-      #- ./src/main/resources/pom.xml:/src/main/resources/pom.xml
+      #- ./pom.xml:/src/main/resources/pom.xml
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_depends_on:5432/blog
       SPRING_DATASOURCE_USERNAME: "postgres"
@@ -57,7 +57,7 @@ services:
     image: postgres
     container_name: postgres_spring
     ports:
-      - 5433:5432
+      - "5432:5432"
     expose:
       - "5432"
     networks:

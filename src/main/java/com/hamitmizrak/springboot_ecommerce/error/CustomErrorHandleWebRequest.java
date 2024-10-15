@@ -28,6 +28,10 @@ import java.util.Map;
 
 // Spring Framework hata mesajları bazen yok yorucu olabilir ancak biz /error ile ilgili hatalı yakalayıp
 // daha sade bir hata mesajı dönderebiliriz.
+// pring Boot'ta özelleştirilmiş bir hata yönetimi (error handling) metodunu göstermektedir.
+// Kod, bir HTTP isteği sırasında meydana gelen hataları yakalar ve kullanıcıya özel hata mesajları veya bilgileri döner.
+// Özellikle, Spring Boot 2.3 ve sonrası için uygun bir hata yönetimi yapılandırması içerir.
+// Aşağıda kodun adım adım açıklamasını bulabilirsiniz:
 public class CustomErrorHandleWebRequest implements ErrorController {
 
     // Field Injection (1.YOL)
@@ -50,6 +54,8 @@ public class CustomErrorHandleWebRequest implements ErrorController {
     private final ErrorAttributes errorAttributes;
 
     // Field
+    // sem  pvc
+    // s m  pv
     private ApiResult apiResult;
     private String path;
     private String message;
@@ -61,6 +67,10 @@ public class CustomErrorHandleWebRequest implements ErrorController {
     @RequestMapping("/error")
     public ApiResult handleErrorMethod(WebRequest webRequest){
         // Spring >=2.3
+        // getErrorAttributes: Bu metod, meydana gelen hatanın ayrıntılarını döner.
+        // Örneğin, hata mesajı, hata türü, hata zamanı gibi bilgileri sağlar.
+        // Bu bilgileri bir Map<String,Object> olarak döner, yani anahtar-değer çiftlerinden oluşan bir yapıdır.
+        // Bu attributes haritası, meydana gelen hata ile ilgili bilgileri içerir ve daha sonra kullanıcılara gösterilecek ya da loglanacak veriler buradan elde edilir.
         Map<String,Object> attributes=errorAttributes.getErrorAttributes(
                 webRequest,
                 ErrorAttributeOptions
@@ -68,6 +78,7 @@ public class CustomErrorHandleWebRequest implements ErrorController {
         ); //end attributes
 
         // Spring'ten verileri almak
+        // smp
         status= (Integer) attributes.get("status");
         message= (String) attributes.get("message");
         path= (String) attributes.get("path");
@@ -75,6 +86,7 @@ public class CustomErrorHandleWebRequest implements ErrorController {
         apiResult= new ApiResult(path,message,status);
 
         // attributes error varsa
+        // v
         if(attributes.containsKey("errors")){
             List<FieldError> fieldErrorList= (List<FieldError>) attributes.get("errors");
             validationErrors=new HashMap<>();
